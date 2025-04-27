@@ -8,12 +8,14 @@
   --navbar-color: #b402029f;
   --background-color: #a3d0fd;
   --text-color: #111827;
+  --description-color: #114745;
   --subtext-color: #6B7280;
   --card-background: #ffffffcc;
   --border-color: rgba(0,0,0,0.05);
   --h2-color: #10adad;
   --icon-color:linear-gradient(135deg, #cde546 0%, #22eea0 100%);
- 
+  --footer-color: #4c91c9;
+
   --gradient-background: linear-gradient(180deg, #82a2c2 0%, #dfc4f1 100%);
   --gradient-primary: linear-gradient(135deg, #4F46E5 0%, #22D3EE 100%);
   --gradient-button: linear-gradient(135deg, #10B981 0%, #059669 100%);
@@ -29,7 +31,8 @@
   --border-color: rgba(255,255,255,0.1);
   --h2-color: #e5e7eb;
   --icon-color:#4ade80;
-  
+  --footer-color: #e7c9c9;
+
   --gradient-background: linear-gradient(180deg, #111827 0%, #374151 100%);
   --gradient-primary: linear-gradient(135deg, #1f2937 0%, #3b82f6 100%);
   --gradient-button: linear-gradient(135deg, #059669 0%, #10B981 100%);
@@ -310,6 +313,7 @@ main section h2 {
   transition: all 0.5s;
 }
 #projects a{
+  color: var(--navbar-color);
   text-decoration: none;
   margin-bottom: 13px;
   font-family: monospace;
@@ -318,7 +322,7 @@ main section h2 {
 }
 #projects p{
   font-size: 1rem;
-  color: var(--subtext-color);
+  color: var(--description-color);
   margin-bottom: 1rem;
   text-decoration: none !important;
 
@@ -378,7 +382,6 @@ main section h2 {
 
 
 
-
 /* Footer */
 footer {
   text-align: center;
@@ -388,7 +391,7 @@ footer {
 }
 
 footer a {
-  color: var(--primary-color);
+  color: var(--footer-color);
   font-weight: 600;
   transition: color 0.3s;
   margin: 40px;

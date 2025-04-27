@@ -18,14 +18,14 @@ $(function() {
 // 1. On load, apply stored theme:
 if (localStorage.getItem(STORAGE_KEY) === 'dark') {
   $html.addClass('dark');
-  $btn.text('☀️');
+$btn.text('☀️ LIGHT MODE');
 }
 
 // 2. Toggle on click:
 $btn.on('click', function() {
   var isDark = $html.toggleClass('dark').hasClass('dark');
   localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
-  $btn.text(isDark ? '☀️' : '🌙');
+  $btn.text(isDark ? "☀️ LIGHT MODE " : "🌙 DARK MODE");
 });
 
     // 2) Date and year
