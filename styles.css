@@ -3,20 +3,20 @@
 
 :root {
  
-  --primary-color: #4F46E5;
+  --primary-color: #166ff5;
   --secondary-color: #07b3ce;
-  --navbar-color: #b402029f;
+  --navbar-color: #290126;
   --background-color: #a3d0fd;
   --text-color: #111827;
   --description-color: #114745;
   --subtext-color: #6B7280;
   --card-background: #ffffffcc;
-  --border-color: rgba(0,0,0,0.05);
+  --border-color: #0dbad8fd;
   --h2-color: #10adad;
   --icon-color:linear-gradient(135deg, #cde546 0%, #22eea0 100%);
   --footer-color: #4c91c9;
 
-  --gradient-background: linear-gradient(180deg, #82a2c2 0%, #dfc4f1 100%);
+  --gradient-background: linear-gradient(to right, #b18ee9, #9cd3f1,#6e57ad);;
   --gradient-primary: linear-gradient(135deg, #4F46E5 0%, #22D3EE 100%);
   --gradient-button: linear-gradient(135deg, #10B981 0%, #059669 100%);
 }
@@ -28,12 +28,12 @@
   --text-color: #f9fafb;
   --subtext-color: #d1d5db;
   --card-background: #374151;
-  --border-color: rgba(255,255,255,0.1);
+  --border-color: #4cbccf;
   --h2-color: #e5e7eb;
   --icon-color:#4ade80;
   --footer-color: #e7c9c9;
 
-  --gradient-background: linear-gradient(180deg, #111827 0%, #374151 100%);
+  --gradient-background: linear-gradient(128deg, hsl(198, 44%, 11%), #331c41, #2c5364);
   --gradient-primary: linear-gradient(135deg, #1f2937 0%, #3b82f6 100%);
   --gradient-button: linear-gradient(135deg, #059669 0%, #10B981 100%);
 }
@@ -72,8 +72,27 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--gradient-background);
   color: var(--text-color);
+  background-size: 400% 400%;
+  animation: bg_rotate 8s infinite ease alternate-reverse;
+  -webkit-animation: bg_rotate 8s infinite ease alternate-reverse;
 }
-
+@keyframes bg_rotate {
+  0% {
+    background-position: 0% 25%;
+  }
+  25% {
+    background-position: 25% 50%;
+  }
+  50% {
+    background-position: 50% 75%;
+  }
+  75% {
+    background-position: 75% 90%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
 a {
   color: var(--primary-color);
   text-decoration: none;
@@ -184,8 +203,13 @@ main section h2 {
 #about img {
   width: 250px;
   border-radius: 50%;
-  box-shadow: 0 8px 16px var(--border-color);
+  
 }
+#about img:hover{
+box-shadow: 10px 8px 16px var(--border-color);
+transition: all 0.75s ease-in-out;
+}
+
 #button {
   background: #fff;
   border: none;
@@ -267,7 +291,7 @@ main section h2 {
   color: #007acc;
 }
 #skill li:hover {
-  box-shadow:  0 50 50 10px var(--icon-color) !important;
+  box-shadow:  0 50 50 10px var(--border-color) !important;
   transform: scale(1.25);
   transition: transform 0.5s;
 }
@@ -341,6 +365,49 @@ main section h2 {
   text-decoration: underline !important;
   transform: scale(1.05);
   transition: all 0.5s;
+}
+/* Certificates */
+#certificates {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+}
+#certificates h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: var(--h2-color);
+}
+#certificates p {
+  margin-bottom: 1rem;
+  color: var(--subtext-color);
+  font-size: 1rem;
+}
+#certificates ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 0;
+}
+#certificates li {
+  background: #fff;
+  list-style: none;
+  border-radius: 8px;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 8px var(--border-color);
+}
+#certificates li img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+#certificates li:hover {
+  box-shadow: 0 50 50 10px var(--border-color) !important;
+  transform: scale(1.05);
+  transition: transform 0.5s;
 }
 /* Contact */
 #contact {
