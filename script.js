@@ -7,7 +7,7 @@ $(function() {
         'Programmer',
         'Tech Enthusiast'
       ],
-      typeSpeed: 60,
+      typeSpeed: 30,
       backSpeed: 30,
       loop: true
     });

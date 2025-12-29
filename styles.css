@@ -100,9 +100,13 @@ a {
 
 header {
   position: sticky;
-  top: 0;
-  background: var(--primary-color);
-  color: #fff;
+  top: 5px;
+  max-width: 80dvw;
+  border-radius: 50px;
+  background: #007acc36;
+  color: var(--text-color);
+  margin: 0 auto;
+ backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -119,23 +123,32 @@ header h1 {
 header nav ul {
     list-style: none;
 font-size: 1.2rem;
-
+  
   display: flex;
   gap: 1.5rem;
 }
 
 header nav a {
   font-weight: 600;
-    color: #fff;
+    color: var(--text-color);
   transition: color 0.3s;
 }
 
-header nav a:hover {
+header nav li ::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--navbar-color);
+  transition: width .3s;
+}
+
+
+header nav li::after:hover {
   
-  color: var(--navbar-color);
-  text-decoration: underline !important;
-  transform: scale(1.05);
-  transition: all 0.5s;
+  width: 100%;
+
+  
   
 }
 .theme-toggle{
@@ -282,7 +295,7 @@ transition: all 0.75s ease-in-out;
   padding: 0.75rem;
   text-align: center;
   font-weight: 600;
-  box-shadow: 0 4px 8px var(--border-color);
+  /* box-shadow: 0 4px 8px var(--border-color); */
 }
 /* make all Devicon icons 3em and blue */
 .icon-hover
@@ -291,8 +304,8 @@ transition: all 0.75s ease-in-out;
   color: #007acc;
 }
 #skill li:hover {
-  box-shadow:  0 50 50 10px var(--border-color) !important;
-  transform: scale(1.25);
+  box-shadow:  0 3px 3px 3px var(--border-color) !important;
+  /* transform: scale(1.25); */
   transition: transform 0.5s;
 }
 #skill h3{
@@ -315,7 +328,7 @@ transition: all 0.75s ease-in-out;
 
 #projects a:hover {
   color: var(--secondary-color);
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
 }
 #projects ul {
 
@@ -330,10 +343,10 @@ transition: all 0.75s ease-in-out;
   text-align: center;
   font-weight: 600;
   margin: 20px 20px;
-  box-shadow: 0 4px 8px var(--primary-color);
 }
 #projects ul li:hover{
-  transform: scale(1.15);
+  box-shadow: 0 4px 8px 5px var(--primary-color);
+  /* transform: scale(1.15); */
   transition: all 0.5s;
 }
 #projects a{
@@ -363,8 +376,7 @@ transition: all 0.75s ease-in-out;
 .source:hover{
   color: var(--secondary-color);
   text-decoration: underline !important;
-  transform: scale(1.05);
-  transition: all 0.5s;
+   
 }
 /* Certificates */
 #certificates {
@@ -396,7 +408,7 @@ transition: all 0.75s ease-in-out;
   padding: 0.75rem;
   text-align: center;
   font-weight: 600;
-  box-shadow: 0 4px 8px var(--border-color);
+  /* box-shadow: 0 4px 8px var(--border-color); */
 }
 #certificates li img {
   width: 100%;
@@ -405,9 +417,8 @@ transition: all 0.75s ease-in-out;
   margin-bottom: 0.5rem;
 }
 #certificates li:hover {
-  box-shadow: 0 50 50 10px var(--border-color) !important;
-  transform: scale(1.05);
-  transition: transform 0.5s;
+  box-shadow: 0 3px 3px 5px var(--border-color) !important;
+  
 }
 /* Contact */
 #contact {
