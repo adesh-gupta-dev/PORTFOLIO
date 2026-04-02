@@ -5,6 +5,22 @@ import { motion } from "framer-motion";
 
 const projects = [
   {
+    title: "Kalpriti - AI powered  website builder",
+    description:
+      "A modern website builder powered by AI, allowing users to create stunning websites without any coding knowledge.",
+    liveUrl: "https://kalpriti.vercel.app/",
+    sourceUrl: "https://github.com/adesh-gupta-dev/Kalpriti",
+    tags: ["React", "Node.js", "JavaScript"],
+  },
+  {
+    title: "Janvote-online-voting-system",
+    description:
+      "An online voting system built with React and Node.js, featuring secure authentication, real-time vote counting, and an intuitive user interface.",
+    liveUrl: "https://janvote.vercel.app/",
+    sourceUrl: "https://github.com/adesh-gupta-dev/Janvote",
+    tags: ["React", "Node.js", "JavaScript"],
+  },
+  {
     title: "Resume Builder",
     description:
       "A responsive web-based resume-builder built with React and Bootstrap, supporting basic to advanced resume templates.",
@@ -16,7 +32,7 @@ const projects = [
     title: "Calculator",
     description:
       "A responsive web-based calculator built with HTML, CSS, and JavaScript, supporting basic arithmetic operations.",
-    liveUrl: "https://adesh-gupta-dev.github.io/calculator/",
+    liveUrl: "https://adesh-gupta-dev.vercel.app/calculator/",
     sourceUrl: "https://github.com/adesh-gupta-dev/calculator",
     tags: ["HTML", "CSS", "JavaScript"],
   },
@@ -24,7 +40,7 @@ const projects = [
     title: "Digital Clock",
     description:
       "A minimalist digital clock built with HTML, CSS, and JavaScript to display real-time updates and styling effects.",
-    liveUrl: "https://adesh-gupta-dev.github.io/Digital-Clock/",
+    liveUrl: "https://adesh-gupta-dev.vercel.app/Digital-Clock/",
     sourceUrl: "https://github.com/adesh-gupta-dev/Digital-Clock",
     tags: ["HTML", "CSS", "JavaScript"],
   },

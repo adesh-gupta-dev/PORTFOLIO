@@ -54,7 +54,7 @@ const HeroSection = () => {
             className="bg-gradient-primary text-primary-foreground hover:opacity-90 transition-all shadow-soft hover:shadow-glow"
             onClick={() =>
               window.open(
-                "https://drive.google.com/file/d/1T6CkE4JhlZgxwOqLjsgYC6TGdncWk0Ai/view?usp=sharing",
+                "https://drive.google.com/file/d/1nML30wF3tOV9adqOKZkSqVmqWo78xqOG/view?usp=sharing",
                 "_blank"
               )
             }

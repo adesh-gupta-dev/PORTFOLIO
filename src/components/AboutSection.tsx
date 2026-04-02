@@ -1,5 +1,4 @@
 import { Code, Zap, Shield } from "lucide-react";
-import profileImage from "@/assets/profile.png";
 import ScrollReveal from "./ScrollReveal";
 
 const highlights = [
@@ -19,6 +18,8 @@ const highlights = [
     description: "Implementing robust security practices",
   },
 ];
+
+const profileImage = "/res/about.png";
 
 const AboutSection = () => {
   return (

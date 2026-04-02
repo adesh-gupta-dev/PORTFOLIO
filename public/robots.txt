@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://adesh-gupta-dev.vercel.app/sitemap.xml

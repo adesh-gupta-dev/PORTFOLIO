@@ -46,7 +46,7 @@ const Footer = () => {
               <Instagram className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
             </a>
             <a
-              href="https://drive.google.com/file/d/1T6CkE4JhlZgxwOqLjsgYC6TGdncWk0Ai/view?usp=sharing"
+              href="https://drive.google.com/file/d/1nML30wF3tOV9adqOKZkSqVmqWo78xqOG/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg hover:bg-secondary transition-colors"
