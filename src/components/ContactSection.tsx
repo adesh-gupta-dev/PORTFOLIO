@@ -11,7 +11,7 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    url: "http://www.linkedin.com/in/adesh-gupta-linked-in",
+    url: "https://www.linkedin.com/in/adesh-gupta-dev/",
     icon: Linkedin,
   },
   {
