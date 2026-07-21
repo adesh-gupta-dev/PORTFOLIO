@@ -28,7 +28,7 @@ const Footer = () => {
               <Github className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
             </a>
             <a
-              href="http://www.linkedin.com/in/adesh-gupta-linked-in"
+              href="https://www.linkedin.com/in/adesh-gupta-dev/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg hover:bg-secondary transition-colors"
