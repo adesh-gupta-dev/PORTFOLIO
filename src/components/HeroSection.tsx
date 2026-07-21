@@ -90,7 +90,7 @@ const HeroSection = () => {
             <Github className="h-5 w-5" />
           </a>
           <a
-            href="http://www.linkedin.com/in/adesh-gupta-linked-in"
+            href="https://www.linkedin.com/in/adesh-gupta-dev/"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 rounded-full bg-card hover:bg-secondary transition-all shadow-card hover:scale-110"
