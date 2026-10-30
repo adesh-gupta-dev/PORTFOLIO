@@ -392,11 +392,29 @@ export async function saveStoredContent(
       409,
       "The content could not be saved because the branch changed or disallows direct updates. Export your draft, check branch rules, and reload published content.",
     );
-  if (!response.ok)
+  if (!response.ok) {
+    // Only expose fixed diagnostics, never GitHub's response body or credentials.
+    const rateLimited =
+      response.status === 429 ||
+      (response.status === 403 &&
+        (response.headers.get("x-ratelimit-remaining") === "0" ||
+          response.headers.has("retry-after")));
+    const reason = rateLimited
+      ? "GitHub temporarily limited publishing requests. Wait before trying again."
+      : response.status === 401
+        ? "GitHub rejected the server token. Replace an expired or revoked GITHUB_CONTENT_TOKEN in Vercel and redeploy."
+        : response.status === 403
+          ? "GitHub denied the update. Give the server token Contents: read and write access to this repository, and check branch rules and organization approval."
+          : response.status === 404
+            ? "GitHub could not access the update target. Check the token's selected repository, GITHUB_REPOSITORY, and GITHUB_BRANCH."
+            : response.status >= 500
+              ? "GitHub is temporarily unavailable. Try publishing again later."
+              : "GitHub could not accept the update. Check the repository settings and server token permissions.";
     throw new HttpError(
       502,
-      "The update could not be saved. Check the server token's Contents write permission. Your draft is kept.",
+      `${reason} (GitHub HTTP ${response.status}.) Your browser draft is kept.`,
     );
+  }
   const data = (await response.json()) as { content?: { sha?: string } };
   if (!data.content?.sha)
     throw new HttpError(

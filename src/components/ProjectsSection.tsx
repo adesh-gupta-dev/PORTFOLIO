@@ -2,6 +2,10 @@ import { ArrowUpRight, Github, Braces, Database, Network } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import { usePortfolio } from "@/lib/portfolio-context";
 import type { Project } from "@/lib/content-schema";
+const responsivePreviews = new Set([
+  "/res/kalpriti-preview.webp",
+  "/res/janvote-preview.webp",
+]);
 const ProjectsSection = () => {
   const { projects, sections, socialLinks } = usePortfolio();
   const s = sections.projects;
@@ -75,6 +79,12 @@ const ProjectCard = ({
       <div className="project-preview">
         <img
           src={project.imageUrl}
+          srcSet={
+            responsivePreviews.has(project.imageUrl)
+              ? `${project.imageUrl.replace(".webp", "-480.webp")} 480w, ${project.imageUrl.replace(".webp", "-720.webp")} 720w, ${project.imageUrl.replace(".webp", "-960.webp")} 960w, ${project.imageUrl} 1440w`
+              : undefined
+          }
+          sizes="(max-width: 639px) calc(100vw - 40px), calc((100vw - 72px) / 2)"
           alt={project.imageAlt || `${project.title} preview`}
           width="1440"
           height="900"

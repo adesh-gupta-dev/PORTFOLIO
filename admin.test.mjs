@@ -43,6 +43,7 @@ test("admin API authenticates, validates, persists and rejects unsafe writes", a
   );
   let sha = "a".repeat(40);
   let upstreamFailure = false;
+  let writeFailureStatus = 0;
   let writes = 0;
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (url, options) => {
@@ -55,6 +56,11 @@ test("admin API authenticates, validates, persists and rejects unsafe writes", a
         { status: 403 },
       );
     if (options.method === "PUT") {
+      if (writeFailureStatus)
+        return Response.json(
+          { message: "sensitive upstream response test-only-token" },
+          { status: writeFailureStatus },
+        );
       const body = JSON.parse(options.body);
       assert.equal(body.sha, sha);
       assert.equal(body.branch, "main");
@@ -267,6 +273,33 @@ test("admin API authenticates, validates, persists and rejects unsafe writes", a
         assert.equal(writes, 1);
       },
     );
+    await t.test("failed GitHub writes identify the cause without exposing secrets", async () => {
+      try {
+        for (const [status, expected] of [
+          [401, /expired or revoked/],
+          [403, /Contents: read and write/],
+          [404, /selected repository/],
+          [429, /limited publishing requests/],
+          [503, /temporarily unavailable/],
+        ]) {
+          writeFailureStatus = status;
+          const response = await send("save", {
+            body: { content, sha }, cookie, csrf,
+          });
+          assert.equal(response.status, 502);
+          const { error } = await response.json();
+          assert.match(error, expected);
+          assert.ok(error.includes(`GitHub HTTP ${status}`));
+          assert.ok(error.includes("draft is kept"));
+          assert.ok(!error.includes("test-only-token"));
+          assert.ok(!error.includes("sensitive upstream"));
+          assert.ok(!error.includes(password));
+        }
+        assert.equal(writes, 1);
+      } finally {
+        writeFailureStatus = 0;
+      }
+    });
     await t.test("upstream failures do not disclose secrets", async () => {
       upstreamFailure = true;
       const response = await send("content", { cookie });

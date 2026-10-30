@@ -29,9 +29,19 @@ export function injectTagManager(html: string, containerId = ""): string {
      w.self!==w.top || w.__portfolioGtmLoaded) return;
   w.__portfolioGtmLoaded=true;
   w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-  var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-  j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-  f.parentNode.insertBefore(j,f);
+  function load(){
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.fetchPriority='low';j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
+  }
+  function schedule(){
+    w.requestAnimationFrame(function(){w.requestAnimationFrame(function(){
+      if(w.requestIdleCallback) w.requestIdleCallback(load,{timeout:2000});
+      else w.setTimeout(load,0);
+    });});
+  }
+  if(d.readyState==='complete') schedule();
+  else w.addEventListener('load',schedule,{once:true});
 })(window,document,'script','dataLayer','${tagManagerId}');
 </script>`;
   const fallback = `<noscript data-portfolio-gtm><iframe src="https://www.googletagmanager.com/ns.html?id=${tagManagerId}" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager" aria-hidden="true" tabindex="-1"></iframe></noscript>`;

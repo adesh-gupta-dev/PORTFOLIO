@@ -17,12 +17,27 @@ function run({
   pathname = "/",
   search = "",
   framed = false,
+  readyState = "loading",
+  idleSupported = true,
 } = {}) {
   const scripts = [];
-  const window = { location: { hostname, pathname, search } };
+  const listeners = new Map();
+  const frames = [];
+  const idleTasks = [];
+  const timers = [];
+  const window = {
+    location: { hostname, pathname, search },
+    addEventListener: (name, callback) => listeners.set(name, callback),
+    requestAnimationFrame: (callback) => frames.push(callback),
+    setTimeout: (callback) => timers.push(callback),
+    ...(idleSupported
+      ? { requestIdleCallback: (callback) => idleTasks.push(callback) }
+      : {}),
+  };
   window.self = window;
   window.top = framed ? {} : window;
   const document = {
+    readyState,
     getElementsByTagName: () => [
       { parentNode: { insertBefore: (node) => scripts.push(node) } },
     ],
@@ -34,12 +49,28 @@ function run({
   const execute = () =>
     runInNewContext(code, { window, document, URLSearchParams });
   execute();
-  return { window, scripts, execute };
+  const finishLoading = () => {
+    const load = listeners.get("load");
+    listeners.delete("load");
+    load?.();
+    while (frames.length) frames.shift()();
+  };
+  const runIdle = () => {
+    while (idleTasks.length) idleTasks.shift()();
+    while (timers.length) timers.shift()();
+  };
+  return { window, scripts, execute, finishLoading, runIdle };
 }
-test("public container loads asynchronously once with Google's bootstrap event", () => {
-  const { window, scripts, execute } = run();
+test("public container waits for load, paint and idle, preserving queued events and loading once", () => {
+  const { window, scripts, execute, finishLoading, runIdle } = run();
+  assert.equal(scripts.length, 0);
+  window.dataLayer.push({ event: "early-contact-click" });
+  finishLoading();
+  assert.equal(scripts.length, 0);
+  runIdle();
   assert.equal(scripts.length, 1);
   assert.equal(scripts[0].async, true);
+  assert.equal(scripts[0].fetchPriority, "low");
   assert.equal(
     scripts[0].src,
     `https://www.googletagmanager.com/gtm.js?id=${tagManagerId}`,
@@ -48,8 +79,21 @@ test("public container loads asynchronously once with Google's bootstrap event",
   assert.equal(typeof window.dataLayer[0]["gtm.start"], "number");
   execute();
   assert.equal(scripts.length, 1);
-  assert.equal(window.dataLayer.length, 1);
-  assert.equal(run({ hostname: "www.adeshgupta.site" }).scripts.length, 1);
+  assert.equal(window.dataLayer.length, 2);
+  assert.equal(window.dataLayer[1].event, "early-contact-click");
+  const www = run({ hostname: "www.adeshgupta.site" });
+  www.finishLoading();
+  www.runIdle();
+  assert.equal(www.scripts.length, 1);
+});
+test("GTM also loads after an already-complete document and without requestIdleCallback", () => {
+  for (const idleSupported of [true, false]) {
+    const page = run({ readyState: "complete", idleSupported });
+    assert.equal(page.scripts.length, 0);
+    page.finishLoading();
+    page.runIdle();
+    assert.equal(page.scripts.length, 1);
+  }
 });
 test("admin, draft previews, framed pages, localhost and staging do not load the container", () => {
   for (const page of [
@@ -61,7 +105,9 @@ test("admin, draft previews, framed pages, localhost and staging do not load the
     { hostname: "localhost" },
     { hostname: "preview.vercel.app" },
   ]) {
-    const { window, scripts } = run(page);
+    const { window, scripts, finishLoading, runIdle } = run(page);
+    finishLoading();
+    runIdle();
     assert.equal(scripts.length, 0);
     assert.equal(window.dataLayer, undefined);
   }

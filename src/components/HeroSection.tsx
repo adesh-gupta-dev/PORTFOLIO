@@ -1,7 +1,7 @@
 import { ArrowDownRight, ArrowUpRight, FileText, Braces } from "lucide-react";
 import { usePortfolio } from "@/lib/portfolio-context";
 import { useEffect, useRef } from "react";
-import { animate, createScope, stagger } from "animejs";
+import { waapi } from "animejs/waapi";
 const HeroSection = () => {
   const { profile: p, socialLinks } = usePortfolio();
   const root = useRef<HTMLElement>(null);
@@ -9,71 +9,75 @@ const HeroSection = () => {
     const element = root.current;
     if (!element) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let scope: ReturnType<typeof createScope> | undefined;
+    let animations: ReturnType<typeof waapi.animate>[] = [];
     let observer: IntersectionObserver | undefined;
-    let entrances: ReturnType<typeof animate>[] = [];
+    let entrances: ReturnType<typeof waapi.animate>[] = [];
     const finishEntrance = () =>
       entrances.forEach((animation) => animation.revert());
     const setup = () => {
       observer?.disconnect();
-      scope?.revert();
+      animations.forEach((animation) => animation.revert());
+      animations = [];
       entrances = [];
-      if (motion.matches) return;
-      scope = createScope({ root: element }).add(() => {
-        entrances.push(
-          animate(".hero-inner > .hero-enter", {
+      if (motion.matches || !("animate" in Element.prototype)) return;
+      entrances.push(
+        waapi.animate(
+          element.querySelectorAll(".status-label, .hero-actions, .directory"),
+          {
             opacity: [0.45, 1],
-            y: [18, 0],
+            transform: ["translateY(18px)", "translateY(0px)"],
             duration: 700,
-            delay: stagger(55),
+            delay: (_element, index) => index * 55,
             ease: "out(3)",
             onComplete: (animation) => animation.revert(),
-          }),
-        );
-        const visual = element.querySelector<HTMLElement>(".hero-visual");
-        if (visual)
-          entrances.push(
-            animate(visual, {
+          },
+        ),
+      );
+      const visual = element.querySelector<HTMLElement>(".hero-visual");
+      if (visual)
+        entrances.push(
+          waapi.animate(
+            visual.querySelectorAll(".hero-visual-header, figcaption"),
+            {
               opacity: [0.6, 1],
-              y: [24, 0],
-              scale: [0.985, 1],
+              transform: ["translateY(16px)", "translateY(0px)"],
               duration: 850,
               delay: 100,
               ease: "out(4)",
               onComplete: (animation) => animation.revert(),
-            }),
-          );
-        const track = element.querySelector<HTMLElement>(
-          ".portrait-orbit-track",
+            },
+          ),
         );
-        if (track && visual) {
-          const orbit = animate(track, {
-            rotate: [0, 360],
-            duration: 18000,
-            ease: "linear",
-            loop: true,
-            autoplay: false,
+      const track = element.querySelector<HTMLElement>(".portrait-orbit-track");
+      if (track && visual) {
+        const orbit = waapi.animate(track, {
+          transform: ["rotate(0deg)", "rotate(360deg)"],
+          duration: 18000,
+          ease: "linear",
+          loop: true,
+          autoplay: false,
+        });
+        animations.push(orbit);
+        if ("IntersectionObserver" in window) {
+          observer = new IntersectionObserver((entries) => {
+            if (motion.matches) {
+              orbit.pause();
+              return;
+            }
+            if (entries.some((entry) => entry.isIntersecting)) orbit.play();
+            else orbit.pause();
           });
-          if ("IntersectionObserver" in window) {
-            observer = new IntersectionObserver((entries) => {
-              if (motion.matches) {
-                orbit.pause();
-                return;
-              }
-              if (entries.some((entry) => entry.isIntersecting)) orbit.play();
-              else orbit.pause();
-            });
-            observer.observe(visual);
-          } else orbit.play();
-        }
-      });
+          observer.observe(visual);
+        } else orbit.play();
+      }
+      animations.push(...entrances);
     };
     setup();
     motion.addEventListener("change", setup);
     element.addEventListener("focusin", finishEntrance);
     return () => {
       observer?.disconnect();
-      scope?.revert();
+      animations.forEach((animation) => animation.revert());
       motion.removeEventListener("change", setup);
       element.removeEventListener("focusin", finishEntrance);
     };
@@ -150,6 +154,13 @@ const HeroSection = () => {
             )}
             <img
               src={p.heroImage}
+              srcSet={
+                p.heroPortrait &&
+                p.heroImage === "/res/adesh-profile-cutout.webp"
+                  ? "/res/adesh-profile-cutout-398.webp 398w, /res/adesh-profile-cutout-640.webp 640w"
+                  : undefined
+              }
+              sizes="(max-width: 459px) calc(100vw - 40px), 420px"
               alt={p.heroImageAlt}
               width={p.heroPortrait ? 398 : 960}
               height={p.heroPortrait ? 512 : 960}

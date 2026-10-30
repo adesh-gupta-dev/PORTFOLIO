@@ -46,6 +46,9 @@ export function PortfolioProvider({
         if (!response.ok) return;
         const data = await response.json();
         const next = validateContent(data.content);
+        // Prerendered content is already current on most visits. Avoid a second
+        // full-page render and metadata rewrite for the identical API snapshot.
+        if (JSON.stringify(next) === JSON.stringify(defaultContent)) return;
         setContent(next);
         updateDocumentMetadata(next);
       })

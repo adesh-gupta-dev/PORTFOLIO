@@ -41,13 +41,24 @@ The deployment output directory remains `dist`.
 particle engine and typing-animation packages remain installed but are excluded
 from the production bundle. Ambient scan motion stops for reduced-motion users.
 
-Anime.js 4.5 powers the staggered hero entrance, one-time section reveals, and
-the slow portrait-ring highlight. React effects own their animation scopes and
-revert them on unmount or a reduced-motion change. Ring motion pauses when the
-portrait is offscreen. Keyboard focus reveals pending content immediately;
+Anime.js 4.5's lightweight WAAPI entry point powers the staggered hero accents,
+one-time section reveals, and slow portrait-ring highlight through native browser
+animations. The heading and portrait remain visible without a startup fade.
+React effects revert animations on unmount or a reduced-motion change. Ring
+motion pauses when the portrait is offscreen. Keyboard focus reveals pending content immediately;
 server-rendered and no-JavaScript content starts visible. CSS still handles
 simple hover/focus transitions, without a second animation on the same entrance
 properties. Install dependencies with the existing pnpm setup (`pnpm install`).
+
+Fonts are self-hosted Latin variable WOFF2 files in `public/fonts`, with the
+original OFL licenses alongside them. Body and heading fonts are preloaded;
+there is no render-blocking Google Fonts stylesheet. The bundled portrait and
+two project screenshots have compressed responsive WebP variants selected by
+`srcSet` and `sizes`. Their original files remain available, and custom image
+URLs entered through the admin editor render without assuming variants exist.
+Scroll reveal geometry comes from batched IntersectionObserver entries. An
+unchanged public content response leaves the prerendered React tree and metadata
+intact instead of triggering another full render during startup.
 
 ## SEO and deployment
 
@@ -252,8 +263,14 @@ builds, and in the Vercel project's build environment for deployment. An empty
 or missing value disables GTM; invalid IDs fail with a configuration error.
 The ID is resolved at build time, so rebuild/redeploy after changing it.
 The Vite HTML transform installs the configured container in the production
-build. The standard asynchronous loader goes high in the head after the charset;
-the noscript fallback is the first body child. No analytics package is installed.
+build. The small loader goes high in the head after the charset. It initializes
+the data layer immediately, then fetches GTM asynchronously at low priority after
+window load, two animation frames, and the next idle period (a two-second idle
+timeout bounds the wait). Events queued before GTM loads are preserved.
+Very short visits can end before the container loads. Audit the tags inside the
+container separately to remove unused or duplicate tags; this code does not
+change its published configuration. The noscript fallback is the first body
+child. No analytics package is installed.
 The container ID is public configuration, separate from all server credentials;
 there is no hardcoded container ID in the application source.
 
