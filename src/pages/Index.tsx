@@ -8,40 +8,37 @@ import AchievementsSection from "@/components/AchievementsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ParticlesBackground from "@/components/ParticlesBackground";
-
 const Index = () => {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("theme");
-      if (stored) return stored === "dark";
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return false;
-  });
-
+  const [isDark, setIsDark] = useState(true);
   useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
+    try {
+      setIsDark(localStorage.getItem("theme") !== "light");
+    } catch {
+      /* Keep default when storage is unavailable. */
     }
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
-
+  }, []);
   const toggleTheme = () => {
-    setIsDark(!isDark);
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    try {
+      localStorage.setItem("theme", next ? "dark" : "light");
+    } catch {
+      /* Theme works without storage. */
+    }
   };
-
   return (
-    <div className="min-h-screen bg-background transition-colors duration-300">
-      <ParticlesBackground isDark={isDark} />
+    <div className="portfolio-site">
+      <ParticlesBackground />
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
       <Navbar isDark={isDark} onToggleTheme={toggleTheme} />
-      <main>
+      <main id="main-content" tabIndex={-1} className="page-container">
         <HeroSection />
         <AboutSection />
-        <SkillsSection />
         <ProjectsSection />
+        <SkillsSection />
         <AchievementsSection />
         <ContactSection />
       </main>
@@ -49,5 +46,4 @@ const Index = () => {
     </div>
   );
 };
-
 export default Index;

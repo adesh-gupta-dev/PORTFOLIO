@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { animate, createScope } from "animejs";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -8,41 +8,73 @@ interface ScrollRevealProps {
   direction?: "up" | "down" | "left" | "right";
 }
 
-const ScrollReveal = ({ 
-  children, 
-  className = "", 
+const ScrollReveal = ({
+  children,
+  className = "",
   delay = 0,
-  direction = "up" 
+  direction = "up",
 }: ScrollRevealProps) => {
-  const directions = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { x: 40, y: 0 },
-    right: { x: -40, y: 0 },
-  };
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const element = ref.current;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (
+      !element ||
+      motion.matches ||
+      !("IntersectionObserver" in window) ||
+      element.getBoundingClientRect().top < window.innerHeight
+    )
+      return;
+
+    let scope: ReturnType<typeof createScope> | undefined;
+    let revealed = false;
+    const finish = () => {
+      revealed = true;
+      observer.disconnect();
+      scope?.revert();
+      element.classList.remove("reveal-pending");
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (revealed || !entries.some((entry) => entry.isIntersecting)) return;
+        revealed = true;
+        observer.disconnect();
+        scope = createScope({ root: element }).add(() => {
+          animate(element, {
+            opacity: [0, 1],
+            x: [direction === "left" ? -20 : direction === "right" ? 20 : 0, 0],
+            y: [direction === "down" ? -18 : direction === "up" ? 18 : 0, 0],
+            duration: 650,
+            delay: Math.max(0, Math.min(delay * 1000, 180)),
+            ease: "out(3)",
+            onComplete: (animation) => animation.revert(),
+          });
+        });
+        element.classList.remove("reveal-pending");
+      },
+      { threshold: 0.06 },
+    );
+
+    // Server HTML and the no-JavaScript page start visible. Only offscreen
+    // content is prepared for a one-time entrance after hydration.
+    element.classList.add("reveal-pending");
+    observer.observe(element);
+    const preferenceChanged = () => {
+      if (motion.matches) finish();
+    };
+    element.addEventListener("focusin", finish);
+    motion.addEventListener("change", preferenceChanged);
+    return () => {
+      finish();
+      element.removeEventListener("focusin", finish);
+      motion.removeEventListener("change", preferenceChanged);
+    };
+  }, [delay, direction]);
 
   return (
-    <motion.div
-      initial={{ 
-        opacity: 0, 
-        ...directions[direction]
-      }}
-      whileInView={{ 
-        opacity: 1, 
-        x: 0, 
-        y: 0 
-      }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ 
-        duration: 0.6, 
-        delay,
-        ease: [0.22, 1, 0.36, 1]
-      }}
-      className={className}
-    >
+    <div ref={ref} className={`reveal ${className}`}>
       {children}
-    </motion.div>
+    </div>
   );
 };
-
 export default ScrollReveal;

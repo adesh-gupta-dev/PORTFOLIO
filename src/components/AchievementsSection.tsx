@@ -1,75 +1,129 @@
-import { Award, ExternalLink } from "lucide-react";
+import { ArrowUpRight, GraduationCap, Award, Download } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
-import { motion } from "framer-motion";
-
-const achievements = [
-  {
-    title: "Foundational C# with Microsoft",
-    issuer: "freeCodeCamp",
-    url: "https://www.freecodecamp.org/certification/adesh_gupta/foundational-c-sharp-with-microsoft",
-    description: "Comprehensive certification covering C# fundamentals and .NET development",
-  },
-  {
-    title: "Python Certification",
-    issuer: "GeeksforGeeks",
-    url: "https://media.geeksforgeeks.org/courses/certificates/ea0967ccd8ead81d392fc1ee0ee0c6ce.pdf",
-    description: "Mastery of fundamental data structures and algorithmic problem-solving",
-  },
-];
-
+import { usePortfolio } from "@/lib/portfolio-context";
 const AchievementsSection = () => {
+  const { education, certifications, sections } = usePortfolio();
+  const s = sections.education;
   return (
-    <section id="achievements" className="py-20 px-4 bg-secondary/30">
-      <div className="max-w-5xl mx-auto">
-        <ScrollReveal className="text-center mb-12">
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            Achievements
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">Certifications & Courses</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Certifications that validate my skills and dedication to continuous learning.
-          </p>
-        </ScrollReveal>
-
-        <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          {achievements.map((achievement, index) => (
-            <motion.a
-              key={index}
-              href={achievement.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                delay: index * 0.15,
-                duration: 0.5,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              whileHover={{ y: -4 }}
-              className="group p-6 rounded-2xl bg-card shadow-card hover:shadow-soft transition-shadow block"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                  <Award className="w-6 h-6 text-primary" />
-                </div>
-                <div className="flex-grow">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-display font-semibold group-hover:text-primary transition-colors">
-                      {achievement.title}
-                    </h3>
-                    <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <p className="text-sm text-accent font-medium mb-2">{achievement.issuer}</p>
-                  <p className="text-sm text-muted-foreground">{achievement.description}</p>
-                </div>
-              </div>
-            </motion.a>
-          ))}
+    <section
+      id="achievements"
+      className="portfolio-section"
+      aria-labelledby="education-heading"
+    >
+      <div className="section-rule">
+        <span>04_ACAD</span>
+        <span>+</span>
+      </div>
+      <ScrollReveal>
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">{s.eyebrow}</p>
+            <h2 id="education-heading">{s.title}</h2>
+          </div>
+          <span className="section-note">{s.note}</span>
         </div>
+      </ScrollReveal>
+      <div className="credentials-grid">
+        {education.map((entry) => {
+          const fileType = /\.(pdf|json)(?:[?#]|$)/i
+            .exec(entry.credentialUrl)?.[1]
+            ?.toLowerCase();
+          return (
+            <ScrollReveal key={entry.id}>
+              <article className="credential panel">
+                <p className="card-meta">
+                  <GraduationCap size={14} /> Degree program
+                </p>
+                <h3>{entry.title}</h3>
+                <p>{entry.institution}</p>
+                {entry.issuer && (
+                  <p className="education-university">{entry.issuer}</p>
+                )}
+                {entry.year && (
+                  <p className="education-year">
+                    Examination year: {entry.year}
+                  </p>
+                )}
+                <div className="credential-issuer">
+                  <span>{entry.description}</span>
+                  {entry.status && (
+                    <span>
+                      <span className="status-dot" /> {entry.status}
+                    </span>
+                  )}
+                </div>
+                {entry.credentialUrl && (
+                  <a
+                    className="action degree-download"
+                    href={entry.credentialUrl}
+                    download={
+                      fileType
+                        ? `${entry.id}-degree-certificate.${fileType}`
+                        : true
+                    }
+                    aria-label={`Download ${entry.title} certificate`}
+                  >
+                    <Download size={15} aria-hidden="true" /> Download degree{" "}
+                    {fileType && (
+                      <span className="degree-file-type">
+                        {fileType.toUpperCase()}
+                      </span>
+                    )}
+                  </a>
+                )}
+              </article>
+            </ScrollReveal>
+          );
+        })}
+        {certifications.length > 0 && (
+          <ScrollReveal delay={0.06}>
+            <article className="credential panel">
+              <p className="card-meta">
+                <Award size={14} /> Certifications
+              </p>
+              <ul className="cert-list">
+                {certifications.map((cert) => {
+                  const inner = (
+                    <>
+                      <div className="cert-copy">
+                        <h3>{cert.title}</h3>
+                        <p>
+                          {cert.issuer}
+                          {cert.description && ` · ${cert.description}`}
+                        </p>
+                      </div>
+                      {cert.url && (
+                        <ArrowUpRight
+                          className="cert-arrow"
+                          size={16}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </>
+                  );
+                  return (
+                    <li className="cert-list-item" key={cert.id}>
+                      {cert.url ? (
+                        <a
+                          className="cert-row cert-link"
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        <div className="cert-row">{inner}</div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </article>
+          </ScrollReveal>
+        )}
       </div>
     </section>
   );
 };
-
 export default AchievementsSection;

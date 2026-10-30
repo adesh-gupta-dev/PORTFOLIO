@@ -1,16 +1,7 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
+# Allow the public portfolio and its rendering assets.
+# Admin pages use noindex; leave them crawlable so that directive can be read.
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://adesh-gupta-dev.vercel.app/sitemap.xml
+Sitemap: https://adeshgupta.site/sitemap.xml

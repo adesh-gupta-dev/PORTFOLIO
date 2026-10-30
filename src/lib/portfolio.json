@@ -1,0 +1,350 @@
+{
+  "version": 1,
+  "profile": {
+    "name": "Adesh Gupta",
+    "role": "Full-Stack Developer",
+    "greeting": "Hi, I'm Adesh Gupta.",
+    "status": "FULL-STACK DEVELOPER",
+    "location": "VARANASI, INDIA",
+    "introduction": "Full-stack developer building practical web applications, backend systems, and AI-powered tools.",
+    "description": "I enjoy turning real problems into reliable software, from application interfaces and REST APIs to database workflows and offline-first features.",
+    "email": "adeshgwork@gmail.com",
+    "resumeUrl": "https://drive.google.com/file/d/1nML30wF3tOV9adqOKZkSqVmqWo78xqOG/view?usp=sharing",
+    "projectsLabel": "View Projects",
+    "resumeLabel": "View Resume",
+    "footerText": "Built with care",
+    "heroImage": "/res/adesh-profile-cutout.webp",
+    "heroImageAlt": "Portrait of Adesh Gupta with the background removed",
+    "heroPortrait": true
+  },
+  "socialLinks": [
+    {
+      "id": "github",
+      "label": "GitHub",
+      "prefix": "gh/",
+      "url": "https://github.com/adesh-gupta-dev/",
+      "showInHero": true
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "prefix": "in/",
+      "url": "https://www.linkedin.com/in/adesh-gupta-dev/",
+      "showInHero": true
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "prefix": "ig/",
+      "url": "https://www.instagram.com/your___adesh/",
+      "showInHero": false
+    }
+  ],
+  "projects": [
+    {
+      "id": "project-1",
+      "title": "Kalpriti AI",
+      "category": "FEATURED PLATFORM",
+      "description": "AI-powered web generation platform with live code editing and preview. A prompt-to-component pipeline combines sandbox rendering, streaming LLM responses, and state preservation.",
+      "tags": ["Next.js 14", "Node.js", "MongoDB", "LLM APIs", "Tailwind CSS"],
+      "liveUrl": "https://kalpriti.vercel.app/",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/Kalpriti",
+      "context": "",
+      "featured": true,
+      "imageUrl": "/res/kalpriti-preview.webp",
+      "imageAlt": "Kalpriti AI website builder public landing page"
+    },
+    {
+      "id": "project-2",
+      "title": "JanVote",
+      "category": "CRYPTOGRAPHIC VOTING",
+      "description": "Role-based online voting platform with secure authentication and real-time vote counting. Database-enforced voting rules, hashed ballots, and audit trails support voting integrity.",
+      "tags": ["React", "Node.js", "Express", "MongoDB", "JWT RBAC"],
+      "liveUrl": "https://janvote.vercel.app/",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/Janvote",
+      "context": "",
+      "featured": true,
+      "imageUrl": "/res/janvote-preview.webp",
+      "imageAlt": "JanVote online voting platform public landing page"
+    },
+    {
+      "id": "project-3",
+      "title": "BillMitra",
+      "category": "PRODUCTION CASE STUDY",
+      "description": "Offline-first mobile billing and inventory application for retail businesses. SQLite and MariaDB support offline transaction logging and background synchronization when connectivity returns.",
+      "tags": ["React Native", "SQLite", "MariaDB", "Node.js", "Offline Sync"],
+      "liveUrl": "",
+      "sourceUrl": "",
+      "context": "A2 Developers · Client deployment",
+      "featured": true,
+      "imageUrl": "",
+      "imageAlt": ""
+    },
+    {
+      "id": "project-4",
+      "title": "Ashwi AI Chatbot",
+      "category": "NLP & RETRIEVAL",
+      "description": "Context-aware conversational assistant for domain-specific questions. Semantic search retrieves context using vector embeddings before passing enriched prompts to language models.",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "OpenAI API",
+        "Vector Embeddings",
+        "Node.js"
+      ],
+      "liveUrl": "",
+      "sourceUrl": "",
+      "context": "RAG architecture · System pipeline",
+      "featured": true,
+      "imageUrl": "",
+      "imageAlt": ""
+    },
+    {
+      "id": "project-5",
+      "title": "Resume Builder",
+      "category": "PROJECT ARCHIVE",
+      "description": "A responsive web-based resume builder with basic to advanced resume templates.",
+      "tags": ["React", "Bootstrap", "JavaScript"],
+      "liveUrl": "https://resume-builder-adesh-gupta.vercel.app/",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/Resume-builder",
+      "context": "",
+      "featured": false,
+      "imageUrl": "",
+      "imageAlt": ""
+    },
+    {
+      "id": "project-6",
+      "title": "Calculator",
+      "category": "PROJECT ARCHIVE",
+      "description": "A responsive web-based calculator supporting basic arithmetic operations.",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "liveUrl": "https://adesh-gupta-dev.github.io/calculator/",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/calculator",
+      "context": "",
+      "featured": false,
+      "imageUrl": "",
+      "imageAlt": ""
+    },
+    {
+      "id": "project-7",
+      "title": "Digital Clock",
+      "category": "PROJECT ARCHIVE",
+      "description": "A minimalist digital clock displaying real-time updates and styling effects.",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "liveUrl": "https://adesh-gupta-dev.github.io/Digital-Clock/",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/Digital-Clock",
+      "context": "",
+      "featured": false,
+      "imageUrl": "",
+      "imageAlt": ""
+    },
+    {
+      "id": "project-8",
+      "title": "Flappy Bird",
+      "category": "PROJECT ARCHIVE",
+      "description": "A classic side-scroller game clone with dynamic obstacles and physics-based bird movement.",
+      "tags": ["C++", "Raylib", "Game Dev"],
+      "liveUrl": "",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/FLAPPY-BIRD",
+      "context": "",
+      "featured": false,
+      "imageUrl": "",
+      "imageAlt": ""
+    },
+    {
+      "id": "project-9",
+      "title": "Ping Pong Game",
+      "category": "PROJECT ARCHIVE",
+      "description": "A two-player ping-pong simulation with score tracking and paddle control.",
+      "tags": ["C++", "Raylib", "Game Dev"],
+      "liveUrl": "",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/PING-PONG-GAME",
+      "context": "",
+      "featured": false,
+      "imageUrl": "",
+      "imageAlt": ""
+    },
+    {
+      "id": "project-10",
+      "title": "Tic Tac Toe",
+      "category": "PROJECT ARCHIVE",
+      "description": "A Tic-Tac-Toe game built with the Raylib graphics library in C, featuring a clean interface and win detection.",
+      "tags": ["C", "Raylib", "Game Dev"],
+      "liveUrl": "",
+      "sourceUrl": "https://github.com/adesh-gupta-dev/TIC-TAC-TOE",
+      "context": "",
+      "featured": false,
+      "imageUrl": "",
+      "imageAlt": ""
+    }
+  ],
+  "experience": [
+    {
+      "id": "a2-developers",
+      "title": "Intern Full Stack Developer",
+      "company": "A2 Developers",
+      "context": "BillMitra & Client Apps",
+      "period": "May 2026 — Present",
+      "location": "Varanasi, India · Remote",
+      "highlights": [
+        "Engineered and maintained production applications across mobile and responsive web using React Native, Node.js, MariaDB, and SQLite.",
+        "Built modular inventory management workflows, retail billing logic, and automated GST-compliant calculation engines.",
+        "Implemented local-first offline storage synchronization between SQLite and remote MariaDB instances, handling data consistency and reconciliation across unstable connections.",
+        "Configured push notifications and unified error telemetry to track operational exceptions and runtime app health.",
+        "Participated in build deployments, production triage, and resolution of urgent client incidents."
+      ],
+      "stack": [
+        "React Native",
+        "Node.js",
+        "MariaDB",
+        "SQLite",
+        "REST APIs",
+        "Offline Sync"
+      ]
+    }
+  ],
+  "skillGroups": [
+    {
+      "id": "skills-1",
+      "title": "Languages",
+      "skills": [
+        "JavaScript (ES6+)",
+        "Python",
+        "C",
+        "C++",
+        "C#",
+        "Java",
+        "HTML5",
+        "CSS3"
+      ]
+    },
+    {
+      "id": "skills-2",
+      "title": "Frontend",
+      "skills": [
+        "React",
+        "Next.js",
+        "React Native",
+        "Tailwind CSS",
+        "Responsive UI",
+        "State Management",
+        "jQuery",
+        "Bootstrap"
+      ]
+    },
+    {
+      "id": "skills-3",
+      "title": "Backend & APIs",
+      "skills": [
+        "Node.js",
+        "Express.js",
+        "REST APIs",
+        "JWT Auth & RBAC",
+        "WebSockets"
+      ]
+    },
+    {
+      "id": "skills-4",
+      "title": "Databases & storage",
+      "skills": ["MongoDB", "MariaDB", "SQLite (Local-first)", "MySQL"]
+    },
+    {
+      "id": "skills-5",
+      "title": "Dev tools & ops",
+      "skills": [
+        "Git & GitHub",
+        "Postman",
+        "Linux",
+        "Docker",
+        "Vercel",
+        "Expo",
+        "VS Code"
+      ]
+    },
+    {
+      "id": "skills-6",
+      "title": "Other tools & platforms",
+      "skills": ["Photoshop", "Canva", "Windows", "Android"]
+    }
+  ],
+  "education": [
+    {
+      "id": "bca",
+      "title": "Bachelor of Computer Applications (BCA)",
+      "institution": "J.N.M. College for Advance Studies and Technology",
+      "description": "University degree certificate",
+      "status": "Graduated",
+      "issuer": "Mahatma Gandhi Kashi Vidyapith, Varanasi",
+      "year": "2026",
+      "credentialUrl": "/res/bca-degree-certificate.pdf"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "google-ai",
+      "title": "Google AI Professional Certificate",
+      "issuer": "Google",
+      "description": "Machine Learning & AI Integration",
+      "url": "https://coursera.org/share/7926bbd95fe6b05d42a6cfeac6a8d36a"
+    },
+    {
+      "id": "javascript",
+      "title": "JavaScript Algorithms & Data Structures",
+      "issuer": "freeCodeCamp",
+      "description": "Algorithmic problem solving",
+      "url": "https://www.freecodecamp.org/certification/adesh_gupta/javascript-v9"
+    },
+    {
+      "id": "c-sharp",
+      "title": "Foundational C# with Microsoft",
+      "issuer": "freeCodeCamp",
+      "description": "View credential",
+      "url": "https://www.freecodecamp.org/certification/adesh_gupta/foundational-c-sharp-with-microsoft"
+    },
+    {
+      "id": "python",
+      "title": "Python Certification",
+      "issuer": "GeeksforGeeks",
+      "description": "View credential",
+      "url": "https://media.geeksforgeeks.org/courses/certificates/ea0967ccd8ead81d392fc1ee0ee0c6ce.pdf"
+    }
+  ],
+  "sections": {
+    "experience": {
+      "title": "Experience",
+      "eyebrow": "[01] CAREER TRAJECTORY",
+      "note": "Production Systems",
+      "navLabel": "Experience"
+    },
+    "projects": {
+      "title": "Selected Projects",
+      "eyebrow": "[02] WORK INDEX",
+      "note": "Explore GitHub",
+      "navLabel": "Projects"
+    },
+    "skills": {
+      "title": "Technical Skills",
+      "eyebrow": "[03] CAPABILITIES",
+      "note": "Categorized engineering toolkit",
+      "navLabel": "Skills"
+    },
+    "education": {
+      "title": "Education & Certifications",
+      "eyebrow": "[04] CREDENTIALS",
+      "note": "Academic & independent learning",
+      "navLabel": "Education"
+    }
+  },
+  "contact": {
+    "title": "Let's build something together.",
+    "description": "Whether you have an open engineering role, a software collaboration, or an interesting systems question, my inbox is open.",
+    "summaryLabel": "30-SECOND RECRUITER SUMMARY",
+    "summary": "I'm looking for entry-level Software Engineer, SDE I, and Full Stack roles. I bring hands-on experience building cross-platform React Native apps, Node.js REST services, and AI-powered tools."
+  },
+  "seo": {
+    "title": "Adesh Gupta | Full-Stack Developer",
+    "description": "Adesh Gupta is a full-stack developer building web applications, React Native apps, Node.js APIs, and AI-powered tools. Explore his experience and projects.",
+    "image": "/res/adesh-profile.jpg",
+    "imageAlt": "Adesh Gupta"
+  }
+}

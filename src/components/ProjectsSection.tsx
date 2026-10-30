@@ -1,153 +1,157 @@
-import { ExternalLink, Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight, Github, Braces, Database, Network } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
-import { motion } from "framer-motion";
-
-const projects = [
-  {
-    title: "Kalpriti - AI powered  website builder",
-    description:
-      "A modern website builder powered by AI, allowing users to create stunning websites without any coding knowledge.",
-    liveUrl: "https://kalpriti.vercel.app/",
-    sourceUrl: "https://github.com/adesh-gupta-dev/Kalpriti",
-    tags: ["React", "Node.js", "JavaScript"],
-  },
-  {
-    title: "Janvote-online-voting-system",
-    description:
-      "An online voting system built with React and Node.js, featuring secure authentication, real-time vote counting, and an intuitive user interface.",
-    liveUrl: "https://janvote.vercel.app/",
-    sourceUrl: "https://github.com/adesh-gupta-dev/Janvote",
-    tags: ["React", "Node.js", "JavaScript"],
-  },
-  {
-    title: "Resume Builder",
-    description:
-      "A responsive web-based resume-builder built with React and Bootstrap, supporting basic to advanced resume templates.",
-    liveUrl: "https://resume-builder-adesh-gupta.vercel.app/",
-    sourceUrl: "https://github.com/adesh-gupta-dev/Resume-builder",
-    tags: ["React", "Bootstrap", "JavaScript"],
-  },
-  {
-    title: "Calculator",
-    description:
-      "A responsive web-based calculator built with HTML, CSS, and JavaScript, supporting basic arithmetic operations.",
-    liveUrl: "https://adesh-gupta-dev.vercel.app/calculator/",
-    sourceUrl: "https://github.com/adesh-gupta-dev/calculator",
-    tags: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    title: "Digital Clock",
-    description:
-      "A minimalist digital clock built with HTML, CSS, and JavaScript to display real-time updates and styling effects.",
-    liveUrl: "https://adesh-gupta-dev.vercel.app/Digital-Clock/",
-    sourceUrl: "https://github.com/adesh-gupta-dev/Digital-Clock",
-    tags: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    title: "Flappy Bird",
-    description:
-      "A classic side-scroller game clone written in C++, featuring dynamic obstacles and smooth physics-based bird movement.",
-    sourceUrl: "https://github.com/adesh-gupta-dev/FLAPPY-BIRD",
-    tags: ["C++", "Raylib", "Game Dev"],
-  },
-  {
-    title: "Ping Pong Game",
-    description:
-      "A two-player ping-pong simulation built with C++, complete with score tracking and realistic paddle control.",
-    sourceUrl: "https://github.com/adesh-gupta-dev/PING-PONG-GAME",
-    tags: ["C++", "Raylib", "Game Dev"],
-  },
-  {
-    title: "Tic Tac Toe",
-    description:
-      "A simple Tic-Tac-Toe game using the RAYLIB graphics library in C, featuring a clean interface and win detection.",
-    sourceUrl: "https://github.com/adesh-gupta-dev/TIC-TAC-TOE",
-    tags: ["C", "Raylib", "Game Dev"],
-  },
-];
-
+import { usePortfolio } from "@/lib/portfolio-context";
+import type { Project } from "@/lib/content-schema";
 const ProjectsSection = () => {
+  const { projects, sections, socialLinks } = usePortfolio();
+  const s = sections.projects;
+  const github = socialLinks.find((link) => link.id === "github" && link.url);
+  const featured = projects.filter((project) => project.featured);
+  const archived = projects.filter((project) => !project.featured);
   return (
-    <section id="projects" className="py-20 px-4">
-      <div className="max-w-5xl mx-auto">
-        <ScrollReveal className="text-center mb-12">
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            Projects
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Featured Work
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A selection of projects that showcase my skills and passion for development.
-          </p>
-        </ScrollReveal>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <motion.article
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                delay: index * 0.1,
-                duration: 0.5,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              whileHover={{ y: -8 }}
-              className="group p-6 rounded-2xl bg-card shadow-card hover:shadow-soft transition-shadow flex flex-col"
-            >
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map((tag, tagIndex) => (
-                  <span
-                    key={tagIndex}
-                    className="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary font-medium"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Title */}
-              <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                {project.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-sm text-muted-foreground mb-4 flex-grow">
-                {project.description}
-              </p>
-
-              {/* Links */}
-              <div className="flex gap-2 mt-auto">
-                {project.liveUrl && (
-                  <Button
-                    size="sm"
-                    className="flex-1 bg-gradient-primary text-primary-foreground hover:opacity-90"
-                    onClick={() => window.open(project.liveUrl, "_blank")}
-                  >
-                    <ExternalLink className="w-4 h-4 mr-1" />
-                    Live Demo
-                  </Button>
-                )}
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className={project.liveUrl ? "" : "flex-1"}
-                  onClick={() => window.open(project.sourceUrl, "_blank")}
-                >
-                  <Github className="w-4 h-4 mr-1" />
-                  Code
-                </Button>
-              </div>
-            </motion.article>
-          ))}
-        </div>
+    <section
+      id="projects"
+      className="portfolio-section"
+      aria-labelledby="projects-heading"
+    >
+      <div className="section-rule">
+        <span>02_DEPLOYS</span>
+        <span>+</span>
       </div>
+      <ScrollReveal>
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">{s.eyebrow}</p>
+            <h2 id="projects-heading">{s.title}</h2>
+          </div>
+          {github ? (
+            <a
+              className="section-note text-link"
+              href={github.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {s.note} ↗
+            </a>
+          ) : (
+            <span className="section-note">{s.note}</span>
+          )}
+        </div>
+      </ScrollReveal>
+      <div className="project-grid">
+        {featured.map((project, index) => (
+          <ScrollReveal key={project.id} delay={(index % 2) * 0.06}>
+            <ProjectCard project={project} index={index} />
+          </ScrollReveal>
+        ))}
+      </div>
+      {archived.length > 0 && (
+        <div className="more-projects">
+          <h3 className="eyebrow">MORE EXPLORATIONS</h3>
+          <div className="project-archive">
+            {archived.map((project, index) => (
+              <ScrollReveal key={project.id}>
+                <ProjectCard
+                  project={project}
+                  index={index + featured.length}
+                />
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
-
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) => (
+  <article id={`work-${project.id}`} className="project-card panel">
+    {project.imageUrl ? (
+      <div className="project-preview">
+        <img
+          src={project.imageUrl}
+          alt={project.imageAlt || `${project.title} preview`}
+          width="1440"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        />
+        <span className="project-preview-label">
+          PROJECT PREVIEW <ArrowUpRight size={13} />
+        </span>
+      </div>
+    ) : (
+      project.featured && (
+        <div
+          className={`project-system-art project-system-art-${index % 2}`}
+          aria-hidden="true"
+        >
+          <div className="system-node">
+            <Braces size={28} />
+            <span>{project.tags[0] || "Interface"}</span>
+          </div>
+          <div className="system-connector">
+            <i />
+            <i />
+            <i />
+          </div>
+          <div className="system-node system-node-core">
+            <Network size={34} />
+            <span>{project.title}</span>
+          </div>
+          <div className="system-connector">
+            <i />
+            <i />
+            <i />
+          </div>
+          <div className="system-node">
+            <Database size={28} />
+            <span>{project.tags[1] || "Data"}</span>
+          </div>
+        </div>
+      )
+    )}
+    <div className="card-meta">
+      <span>{project.category}</span>
+      <span>[MOD: {String(index + 1).padStart(2, "0")}]</span>
+    </div>
+    <h3>{project.title}</h3>
+    <p className="project-description">{project.description}</p>
+    <ul className="tags">
+      {project.tags.map((tag, i) => (
+        <li className="tag" key={i}>
+          {tag}
+        </li>
+      ))}
+    </ul>
+    <div className="project-links">
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Live demo of ${project.title}`}
+        >
+          Live Demo <ArrowUpRight size={13} />
+        </a>
+      )}
+      {project.sourceUrl && (
+        <a
+          href={project.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Source code for ${project.title}`}
+        >
+          <Github size={13} /> Source
+        </a>
+      )}
+      {project.context && <span>{project.context}</span>}
+    </div>
+  </article>
+);
 export default ProjectsSection;

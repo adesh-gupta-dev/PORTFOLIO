@@ -1,101 +1,127 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
-import { Button } from "@/components/ui/button";
-
+import { usePortfolio } from "@/lib/portfolio-context";
 interface NavbarProps {
   isDark: boolean;
   onToggleTheme: () => void;
 }
-
-const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#achievements", label: "Achievements" },
-  { href: "#contact", label: "Contact" },
-];
-
 const Navbar = ({ isDark, onToggleTheme }: NavbarProps) => {
+  const { profile, sections } = usePortfolio();
+  const links = [
+    { href: "#home", label: "About" },
+    { href: "#about", label: sections.experience.navLabel },
+    { href: "#projects", label: sections.projects.navLabel },
+    { href: "#skills", label: sections.skills.navLabel },
+    { href: "#achievements", label: sections.education.navLabel },
+    { href: "#contact", label: "Contact" },
+  ];
   const [isOpen, setIsOpen] = useState(false);
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      const navHeight = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-    }
-    setIsOpen(false);
-  };
-
+  const [active, setActive] = useState("#home");
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-10% 0px -55% 0px" },
+    );
+    [
+      "#home",
+      "#about",
+      "#projects",
+      "#skills",
+      "#achievements",
+      "#contact",
+    ].forEach((href) => {
+      const section = document.querySelector(href);
+      if (section) observer.observe(section);
+    });
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const media = window.matchMedia("(min-width: 900px)");
+    const resize = () => {
+      if (media.matches) setIsOpen(false);
+    };
+    window.addEventListener("keydown", close);
+    media.addEventListener("change", resize);
+    return () => {
+      window.removeEventListener("keydown", close);
+      media.removeEventListener("change", resize);
+    };
+  }, [isOpen]);
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
-      <nav className="glass rounded-full px-6 py-3 shadow-card">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <a
-            href="#"
-            className="font-display text-xl font-bold text-gradient"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          >
-            AG
-          </a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-secondary"
-              >
-                {link.label}
-              </button>
-            ))}
-            <div className="ml-2 pl-2 border-l border-border">
-              <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(!isOpen)}
-              className="h-10 w-10"
-              aria-label="Toggle menu"
+    <header className="site-header">
+      <div className="header-inner">
+        <a href="#home" className="brand" onClick={() => setIsOpen(false)}>
+          <span>~/</span> {profile.name}{" "}
+          <span className="brand-tag">portfolio</span>
+        </a>
+        <nav aria-label="Main navigation" className="desktop-nav">
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              aria-current={active === link.href ? "location" : undefined}
             >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <div className="header-actions">
+          {profile.resumeUrl && (
+            <a
+              className="resume-link"
+              href={profile.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Resume <ArrowUpRight size={12} />
+            </a>
+          )}
+          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
+          <button
+            ref={toggleRef}
+            className="menu-toggle"
+            aria-label={isOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t border-border animate-fade-in">
-            <div className="flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className="px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors text-left"
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+      </div>
+      <nav
+        id="mobile-nav"
+        aria-label="Mobile navigation"
+        className={`mobile-nav ${isOpen ? "is-open" : ""}`}
+        aria-hidden={!isOpen}
+      >
+        <div>
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              tabIndex={isOpen ? 0 : -1}
+              onClick={() => setIsOpen(false)}
+            >
+              {link.label}
+              <ArrowUpRight size={14} />
+            </a>
+          ))}
+        </div>
       </nav>
     </header>
   );
 };
-
 export default Navbar;

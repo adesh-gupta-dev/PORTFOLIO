@@ -1,94 +1,112 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <meta name="google-site-verification" content="SjxcYixhfbvijcBiN6ZndTo1LFiYDm1kiEU13_R8dzQ" />
-    <!-- SEO Meta Tags -->
-    <title>Adesh Gupta — Web Developer & Programmer Portfolio</title>
-    <meta
-      name="title"
-      content="Adesh Gupta — Web Developer & Programmer Portfolio"
-    />
+    <title>Adesh Gupta | Full-Stack Developer</title>
     <meta
       name="description"
-      content="Adesh Gupta's portfolio showcasing web development projects, programming skills, and tech enthusiasm. Specializing in full-stack development with focus on security and scalability."
-    />
-    <meta
-      name="keywords"
-      content="Adesh Gupta, dev , Web Developer, Frontend Developer, Backend Developer, Full-Stack Developer, Software Engineer, Programmer, Tech Enthusiast, Portfolio, Personal Portfolio, Web Portfolio, React Developer, React, Vite, TypeScript, JavaScript, Tailwind CSS, HTML, CSS, Node.js, API Development, REST APIs, UI/UX, Responsive Design, Performance Optimization, Security, Scalability, System Design, C++, Java, Python"
+      content="Adesh Gupta is a full-stack developer building web applications, React Native apps, Node.js APIs, and AI-powered tools. Explore his experience and projects."
     />
     <meta name="author" content="Adesh Gupta" />
     <meta name="robots" content="index, follow" />
-    <meta name="color-scheme" content="light dark" />
-    <link rel="canonical" href="https://adesh-gupta-dev.vercel.app/" />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#070a12" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="google-site-verification"
+      content="SjxcYixhfbvijcBiN6ZndTo1LFiYDm1kiEU13_R8dzQ"
+    />
+    <link rel="canonical" href="https://adeshgupta.site/" />
+    <link
+      rel="describedby"
+      href="https://adeshgupta.site/llms.txt"
+      type="text/plain"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="profile" />
     <meta property="og:site_name" content="Adesh Gupta Portfolio" />
     <meta property="og:locale" content="en_US" />
-    <meta
-      property="og:title"
-      content="Adesh Gupta — Web Developer & Programmer Portfolio"
-    />
+    <meta property="og:title" content="Adesh Gupta | Full-Stack Developer" />
     <meta
       property="og:description"
-      content="Explore the projects and skills of Adesh Gupta, a passionate web developer and programmer building real, end-to-end applications."
+      content="Practical web applications, backend systems, and AI-powered tools. Explore Adesh Gupta's projects, experience, and technical skills."
     />
-    <meta property="og:url" content="https://adesh-gupta-dev.vercel.app/" />
+    <meta property="og:url" content="https://adeshgupta.site/" />
     <meta
       property="og:image"
-      content="https://adesh-gupta-dev.vercel.app/res/about.png"
+      content="https://adeshgupta.site/res/adesh-profile.jpg"
     />
-    <meta
-      property="og:image:alt"
-      content="Adesh Gupta — Web Developer & Programmer"
-    />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Adesh Gupta — Web Developer & Programmer Portfolio"
-    />
+    <meta property="og:image:alt" content="Adesh Gupta" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Adesh Gupta | Full-Stack Developer" />
     <meta
       name="twitter:description"
-      content="Explore the projects and skills of Adesh Gupta, a passionate web developer and programmer."
+      content="Full-stack developer building web applications, React Native apps, Node.js APIs, and AI-powered tools."
     />
     <meta
       name="twitter:image"
-      content="https://adesh-gupta-dev.vercel.app/res/about.png"
+      content="https://adeshgupta.site/res/adesh-profile.jpg"
     />
-
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#3b82f6" />
-
-    <!-- Structured Data (JSON-LD) -->
+    <meta name="twitter:image:alt" content="Adesh Gupta" />
+    <script>
+      try {
+        document.documentElement.classList.toggle(
+          "dark",
+          localStorage.getItem("theme") !== "light",
+        );
+      } catch {
+        /* Default to dark. */
+      }
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Adesh Gupta",
-        "url": "https://adesh-gupta-dev.vercel.app/",
-        "image": "https://adesh-gupta-dev.vercel.app/res/about.png",
-        "jobTitle": "Web Developer & Programmer",
-        "description": "Passionate web developer and programmer building real, end-to-end applications with focus on security and scalability.",
-        "sameAs": [
-          "https://github.com/adesh-gupta-dev",
-          "https://linkedin.com/in/adesh-gupta"
-        ],
-        "knowsAbout": [
-          "React",
-          "JavaScript",
-          "TypeScript",
-          "C++",
-          "Java",
-          "Python",
-          "Full-Stack Development"
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://adeshgupta.site/#person",
+            "name": "Adesh Gupta",
+            "url": "https://adeshgupta.site/",
+            "jobTitle": "Full-Stack Developer",
+            "email": "mailto:adeshgwork@gmail.com",
+            "description": "Full-stack developer building web applications, backend systems, and AI-powered tools.",
+            "sameAs": [
+              "https://www.linkedin.com/in/adesh-gupta-dev/",
+              "https://github.com/adesh-gupta-dev/"
+            ],
+            "knowsAbout": [
+              "React",
+              "React Native",
+              "Node.js",
+              "JavaScript",
+              "Python",
+              "SQLite",
+              "MariaDB",
+              "Full-Stack Development"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://adeshgupta.site/#website",
+            "url": "https://adeshgupta.site/",
+            "name": "Adesh Gupta Portfolio",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://adeshgupta.site/#person" }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://adeshgupta.site/#profile",
+            "url": "https://adeshgupta.site/",
+            "name": "Adesh Gupta | Full-Stack Developer",
+            "isPartOf": { "@id": "https://adeshgupta.site/#website" },
+            "mainEntity": { "@id": "https://adeshgupta.site/#person" }
+          }
         ]
       }
     </script>
