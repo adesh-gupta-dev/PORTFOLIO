@@ -1,8 +1,8 @@
 # Adesh Gupta
 
-> Full-Stack Developer. Full-stack developer building practical web applications, backend systems, and AI-powered tools.
+> Full-Stack Developer. Full-stack developer in Varanasi, India, building React and Next.js websites, React Native apps, Node.js APIs, and AI-powered tools.
 
-I enjoy turning real problems into reliable software, from application interfaces and REST APIs to database workflows and offline-first features.
+I build software with JavaScript, Python, Express, MongoDB, MariaDB, and SQLite. My projects include Kalpriti AI, JanVote, BillMitra, and Ashwi AI Chatbot, spanning AI website generation, online voting, offline-first billing, and conversational assistants.
 
 ## Portfolio
 - [Professional profile](<https://adeshgupta.site/>): Adesh Gupta, Full-Stack Developer, VARANASI, INDIA.

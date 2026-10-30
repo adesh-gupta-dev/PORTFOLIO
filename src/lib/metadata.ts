@@ -12,6 +12,11 @@ const escape = (value: string) =>
 export function metadata(content: PortfolioContent) {
   const { profile: p, seo } = content;
   const image = seo.image ? new URL(seo.image, productionOrigin).href : "";
+  const topics = [...new Set([
+    p.role,
+    ...content.skillGroups.flatMap((group) => group.skills),
+    ...content.projects.flatMap((project) => project.tags),
+  ])];
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -23,15 +28,22 @@ export function metadata(content: PortfolioContent) {
         jobTitle: p.role,
         email: `mailto:${p.email}`,
         description: p.introduction,
+        mainEntityOfPage: { "@id": `${productionOrigin}/#profile` },
+        homeLocation: { "@type": "Place", name: p.location },
+        alumniOf: content.education.map((entry) => ({
+          "@type": "EducationalOrganization",
+          name: entry.institution,
+        })),
         ...(image ? { image } : {}),
         sameAs: content.socialLinks.filter((s) => s.url).map((s) => s.url),
-        knowsAbout: [...new Set(content.skillGroups.flatMap((s) => s.skills))],
+        knowsAbout: topics,
       },
       {
         "@type": "WebSite",
         "@id": `${productionOrigin}/#website`,
         url: `${productionOrigin}/`,
         name: `${p.name} Portfolio`,
+        alternateName: p.name,
         inLanguage: "en",
         publisher: { "@id": `${productionOrigin}/#person` },
       },
@@ -40,6 +52,10 @@ export function metadata(content: PortfolioContent) {
         "@id": `${productionOrigin}/#profile`,
         url: `${productionOrigin}/`,
         name: seo.title,
+        description: seo.description,
+        inLanguage: "en",
+        about: { "@id": `${productionOrigin}/#person` },
+        ...(image ? { primaryImageOfPage: { "@type": "ImageObject", url: image, caption: seo.imageAlt } } : {}),
         isPartOf: { "@id": `${productionOrigin}/#website` },
         mainEntity: { "@id": `${productionOrigin}/#person` },
         hasPart: content.projects.map((project) => ({

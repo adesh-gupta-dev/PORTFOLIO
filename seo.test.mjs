@@ -93,6 +93,27 @@ test("project schema describes visible works and connects to the profile", () =>
     `${canonicalOrigin}/#person`,
   );
 });
+
+test("identity schema follows visible location, education, and project technologies", () => {
+  const next = structuredClone(content);
+  next.profile.location = "Updated location";
+  next.education[0].institution = "Updated college";
+  next.projects[0].tags.push("Updated technology");
+  const graph = metadata(next).graph["@graph"];
+  const person = graph.find((node) => node["@type"] === "Person");
+  const profile = graph.find((node) => node["@type"] === "ProfilePage");
+  assert.equal(person.homeLocation.name, next.profile.location);
+  assert.equal(person.alumniOf[0].name, next.education[0].institution);
+  assert.ok(person.knowsAbout.includes("Updated technology"));
+  assert.equal(new Set(person.knowsAbout).size, person.knowsAbout.length);
+  assert.equal(person.mainEntityOfPage["@id"], profile["@id"]);
+  assert.equal(profile.about["@id"], person["@id"]);
+  assert.equal(profile.description, next.seo.description);
+  assert.equal(profile.primaryImageOfPage.caption, next.seo.imageAlt);
+  next.seo.image = "";
+  const withoutImage = metadata(next).graph["@graph"];
+  assert.ok(!("primaryImageOfPage" in withoutImage.find((node) => node["@type"] === "ProfilePage")));
+});
 test("metadata safely serializes content that contains HTML-like text", () => {
   const next = structuredClone(content);
   next.profile.name = "Name </script><script>alert(1)</script>";

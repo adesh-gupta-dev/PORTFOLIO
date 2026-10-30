@@ -6,15 +6,15 @@
     "greeting": "Hi, I'm Adesh Gupta.",
     "status": "FULL-STACK DEVELOPER",
     "location": "VARANASI, INDIA",
-    "introduction": "Full-stack developer building practical web applications, backend systems, and AI-powered tools.",
-    "description": "I enjoy turning real problems into reliable software, from application interfaces and REST APIs to database workflows and offline-first features.",
+    "introduction": "Full-stack developer in Varanasi, India, building React and Next.js websites, React Native apps, Node.js APIs, and AI-powered tools.",
+    "description": "I build software with JavaScript, Python, Express, MongoDB, MariaDB, and SQLite. My projects include Kalpriti AI, JanVote, BillMitra, and Ashwi AI Chatbot, spanning AI website generation, online voting, offline-first billing, and conversational assistants.",
     "email": "adeshgwork@gmail.com",
     "resumeUrl": "https://drive.google.com/file/d/1aGSAFsSX78YB6gq9cThE4e8oZHu24VmQ/view?usp=sharing",
     "projectsLabel": "View Projects",
     "resumeLabel": "View Resume",
     "footerText": "Built with care",
     "heroImage": "/res/adesh-profile-cutout.webp",
-    "heroImageAlt": "Portrait of Adesh Gupta with the background removed",
+    "heroImageAlt": "Adesh Gupta, full-stack developer in Varanasi, India",
     "heroPortrait": true
   },
   "socialLinks": [
@@ -394,9 +394,9 @@
     "summary": "I'm looking for entry-level Software Engineer, SDE I, and Full Stack roles. I bring hands-on experience building cross-platform React Native apps, Node.js REST services, and AI-powered tools."
   },
   "seo": {
-    "title": "Adesh Gupta | Full-Stack Developer",
-    "description": "Adesh Gupta is a full-stack developer building web applications, React Native apps, Node.js APIs, and AI-powered tools. Explore his experience and projects.",
+    "title": "Adesh Gupta | Full-Stack Developer in Varanasi, India",
+    "description": "Explore Adesh Gupta's portfolio: a full-stack developer in Varanasi, India, building React, Next.js, React Native, Node.js, and AI-powered applications.",
     "image": "/res/adesh-profile.jpg",
-    "imageAlt": "Adesh Gupta"
+    "imageAlt": "Adesh Gupta, full-stack developer in Varanasi, India"
   }
 }
