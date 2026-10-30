@@ -1,6 +1,7 @@
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, normalizePath } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { validateContent } from "./src/lib/content-schema";
 import {
   injectTagManager,
   stripTagManager,
@@ -24,6 +25,23 @@ export default defineConfig(({ mode, command }) => {
       port: 8080,
     },
     plugins: [
+      {
+        name: "validate-bundled-portfolio-content",
+        enforce: "pre",
+        transform(source, id) {
+          if (
+            normalizePath(id.split("?")[0]) !==
+            normalizePath(path.resolve(__dirname, "src/lib/portfolio.json"))
+          )
+            return;
+          // Both SSR and browser bundles receive the same validated, normalized
+          // snapshot. The validator itself stays out of the homepage entry.
+          return {
+            code: JSON.stringify(validateContent(JSON.parse(source))),
+            map: null,
+          };
+        },
+      },
       react(),
       {
         name: "portfolio-google-tag-manager",

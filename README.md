@@ -59,6 +59,10 @@ URLs entered through the admin editor render without assuming variants exist.
 Scroll reveal geometry comes from batched IntersectionObserver entries. An
 unchanged public content response leaves the prerendered React tree and metadata
 intact instead of triggering another full render during startup.
+Vite validates and normalizes the bundled portfolio JSON for both the browser
+and prerenderer. Runtime validation and metadata code are separate chunks loaded
+only for changed API content or draft previews; external data is still validated
+before it can replace the page. Admin validation remains enabled.
 
 ## SEO and deployment
 
